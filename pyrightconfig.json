@@ -1,0 +1,12 @@
+{
+    "defineConstant": {
+        // Get the virtual environment name from running: pipenv --venv
+        // Use the last part of the path after the last backslash
+        "VENV_NAME": "2025.02__LearnWagtail_UltimateWagtail-aKvc4eCy"
+    },
+    "venvPath": "C:/Users/torkx/.virtualenvs",
+    "venv": "${VENV_NAME}",
+    "extraPaths": [
+        "C:/Users/torkx/.virtualenvs/${VENV_NAME}/Lib/site-packages"
+    ]
+}

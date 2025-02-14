@@ -2,7 +2,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from wagtail.admin.forms import WagtailAdminPageForm
 
-# Create your models here.
+# Custom Page For that can be used in any Page class
+# base_form_class = CustomPageForm # help text and settings for the base Page fields from Wagtail (brought from base/models.py)
 class CustomPageForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -27,3 +28,24 @@ class CustomPageForm(WagtailAdminPageForm):
                 raise ValidationError(errors)
                 
             return cleaned_data
+        
+
+# Snippet
+from wagtail.admin.panels import FieldPanel
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.views.snippets import SnippetViewSet
+from taggit.models import TaggedItemBase, Tag
+
+@register_snippet
+class TagSnippetViewSet(SnippetViewSet):
+    model = Tag
+    icon = "tag"
+    add_to_admin_menu = True
+    menu_label = "Tags"
+    menu_order = 400
+    list_display = ["name","slug"]
+    search_fields = ["name"]
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("slug"),
+    ]

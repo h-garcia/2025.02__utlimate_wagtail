@@ -1,4 +1,4 @@
-# 2025.01.30 / Learn Wgatil / The Ultimate Wagtail Developers Course
+# 2025.01.30 / Learn Wagtil / The Ultimate Wagtail Developers Course
 https://github.com/KalobTaulien/ultimate-wagtail-developers-course-source-code 
 
 ## Run
@@ -15,8 +15,9 @@ https://github.com/KalobTaulien/ultimate-wagtail-developers-course-source-code
     * https://docs.wagtail.org/en/stable/advanced_topics/images/image_serve_view.html#dynamic-image-serve-view 
 * I can do a custom document model as well
     * https://docs.wagtail.org/en/stable/advanced_topics/documents/custom_document_model.html 
-
-
+* BASE APP
+    * CustomPageForm and validations
+    * Wagtail hooks file
 
 ## next
-* add the validation to the `base_form_class`
+* 

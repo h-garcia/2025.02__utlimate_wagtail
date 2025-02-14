@@ -70,11 +70,19 @@ class IndexPage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    image = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
 
     ## Page Panels
     content_panels = Page.content_panels + [
         FieldPanel('subtitle'),
         FieldPanel('cta_url'),
+        FieldPanel('image'),
         FieldPanel('body'),
     ]
 
