@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+
+{% block body_class %}template-homepage{% endblock %}
+
+
+{% block content %}
+
+
+<h1 class="text-3xl my-10 italic uppercase text-center text-orange-500">
+    {{page.title}}
+</h1>
+<h2 class="text-2xl my-10 italic uppercase text-center text-orange-500">
+    {{page.subtitle}}
+</h2>
+
+{% if page.tags %}
+<section class="mt-12 ml-5">
+    <h3 class="text-xl mt-10 uppercase text-orange-500">TAGS</h3>
+    {% for tag in page.tags.all  %}
+    <p>
+        {{tag.name}} -- {{tag.slug}}
+    </p>
+    {% endfor %}
+</section>
+{% endif %}
+
+{% if page.body %}
+<section class="mt-12 ml-12">
+    {{page.body|richtext}}
+</section>
+{% endif %}
+
+
+{% endblock content %}

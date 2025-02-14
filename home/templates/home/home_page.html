@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+{% comment %}
+Delete the line below if you're just getting started and want to remove the welcome screen!
+{% endcomment %}
+<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+
+<h1 class="text-3xl my-10 italic uppercase text-center text-orange-500"> 
+    {{page.title}}
+</h1>
+<h2 class="text-2xl my-10 italic uppercase text-center text-orange-500">
+    {{page.subtitle}}
+</h2>
+
+<section>
+    <div class="bg-white">
+        <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+          <h2 class="max-w-2xl text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Boost your productivity. Start using our app today.</h2>
+          {% if page.cta_url %}
+            <div class="mt-10 flex items-center gap-x-6">
+                <a href="{{page.cta_url.url}}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Index</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+</section>
+
+
+{% if page.body %}
+    {{page.body|richtext}}
+{% endif %}
+
+{% if page.image %}
+    <p>400</p>
+    {% image page.image width-400 format-avif-lossless %}
+
+    <p>fill 150x150</p>
+    {% image page.image fill-150x150-c100 %}
+
+    <p>custom img</p>
+    {% image page.image fill-90x200 as custom_img %}
+    <img src="{{custom_img.url}}" alt="{{custom_img.alt}}">
+    {{custom_img.image.title}} 
+
+{% endif %}
+
+<section class="mt-12">
+    {{page.context_var}}
+
+</section>
+
+
+
+{% endblock content %}

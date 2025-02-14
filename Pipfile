@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Django = ">=5.1,<5.2"
+django-extensions="*"
+django-htmx = "*"
+django-template-partials = "*"
+wagtail = ">=6.3,<6.4"
+
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
