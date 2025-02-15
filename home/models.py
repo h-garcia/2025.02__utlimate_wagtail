@@ -57,7 +57,7 @@ class IndexPage(Page):
     page_description = "#HELP_TEXT... Index page for listing blog entries"
     max_count = 1
     parent_page_types = ['home.HomePage']
-    subpage_types = ['home.DetailPage'] # empty list means no subpages allowed 
+    subpage_types = ['home.DetailPage', 'home.StreamPage'] # empty list means no subpages allowed 
     base_form_class = CustomPageForm # help text and settings for the base Page fields from Wagtail (brought from base/models.py)
 
     ## Page Fields
@@ -91,7 +91,7 @@ class IndexPage(Page):
         context = super().get_context(request, *args, **kwargs)
 
         # Add extra variables and return the updated context
-        context['child_pages'] = IndexPage.objects.child_of(self).live() # get all child pages
+        context['child_pages'] = Page.objects.child_of(self).live().order_by('-first_published_at') # get all child pages
         context["page_description"] = self.page_description
         context['context_var'] = "This is a context variable"
         return context
@@ -146,5 +146,24 @@ class DetailPage(Page):
     class Meta:
         verbose_name = "Detail page"
 
+from wagtail.fields import StreamField
+from wagtail import blocks
+from wagtail.images.blocks import ImageChooserBlock
+class StreamPage(Page):
+    template = "home/stream_page.html"
+    page_description = "Detail page for blog entries / Streamfields"
+    parent_page_types = ['home.IndexPage']
 
+    body = StreamField([
+        ('heading', blocks.CharBlock()),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+    ])
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body'),
+    ]
+
+    class Meta:
+        verbose_name = "Stream page"
 

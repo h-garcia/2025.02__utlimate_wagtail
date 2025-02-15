@@ -17,7 +17,7 @@ https://github.com/KalobTaulien/ultimate-wagtail-developers-course-source-code
     * https://docs.wagtail.org/en/stable/advanced_topics/documents/custom_document_model.html 
 * BASE APP
     * CustomPageForm and validations
-    * Wagtail hooks file
+    * Configure a Tag snippet
 
 ## next
-* 
+* Tests for admin pages and features
