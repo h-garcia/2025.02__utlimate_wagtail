@@ -7,6 +7,7 @@ from wagtail.images import get_image_model
 from django.core.exceptions import ValidationError
 from wagtail.admin.forms import WagtailAdminPageForm
 from base.models import CustomPageForm
+from base.sections import cta_section
 
 
 
@@ -23,7 +24,7 @@ class CustomRendition(AbstractRendition):
             ('image', 'filter_spec', 'focal_point_key'),
         )
 
-class HomePage(Page):
+class HomePage(Page, cta_section):
     template = "home/home_page.html"
     max_count = 1
 
@@ -44,12 +45,12 @@ class HomePage(Page):
         related_name="+",
     )
 
-    content_panels = Page.content_panels + [
+    content_panels = Page.content_panels + cta_section.panels + [
         FieldPanel("subtitle"),
         FieldPanel("cta_url"),
         FieldPanel("body"),
         FieldPanel("image"),
-    ]
+    ] 
 
 class IndexPage(Page):
     ## Page Attributes

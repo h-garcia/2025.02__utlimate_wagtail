@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.core.exceptions import ValidationError
 from wagtail.admin.forms import WagtailAdminPageForm
 
@@ -7,6 +8,11 @@ from wagtail.admin.forms import WagtailAdminPageForm
 class CustomPageForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+         # Remove show_in_menus field
+        self.fields.pop('show_in_menus', None)
+
+        # Existing field customizations
         self.fields['title'].help_text = "The page title as you'd like it to be seen by the public. The title's length is limited to 60 characters"
         self.fields['seo_title'].required = True
         self.fields['search_description'].required = True
