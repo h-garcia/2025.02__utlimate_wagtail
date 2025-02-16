@@ -39,5 +39,3 @@ class cta_section(models.Model):
 
     class Meta:
         abstract = True
-
-

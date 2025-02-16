@@ -129,6 +129,8 @@ class BlogPageTags(TaggedItemBase):
         on_delete=models.CASCADE,
     )
 
+
+from base.models import Author
 class DetailPage(Page):
     template = "home/detail_page.html"
     page_description = "Detail page for blog entries"
@@ -136,12 +138,20 @@ class DetailPage(Page):
 
     subtitle = models.CharField(max_length=100, blank=True)
     body = RichTextField(blank=True)
-    tags=ClusterTaggableManager(through=BlogPageTags, blank=True)
+    tags = ClusterTaggableManager(through=BlogPageTags, blank=True)
+    author = models.ForeignKey(
+        Author,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="detail_pages",
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('subtitle'),
         FieldPanel('tags'),
         FieldPanel('body'),
+        FieldPanel('author'),
     ]
 
     class Meta:
@@ -150,6 +160,7 @@ class DetailPage(Page):
 from wagtail.fields import StreamField
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from base.models import Author
 class StreamPage(Page):
     template = "home/stream_page.html"
     page_description = "Detail page for blog entries / Streamfields"

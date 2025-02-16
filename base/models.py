@@ -2,6 +2,15 @@ from django.db import models
 
 from django.core.exceptions import ValidationError
 from wagtail.admin.forms import WagtailAdminPageForm
+from django.contrib.contenttypes.fields import GenericRelation
+from wagtail.models import RevisionMixin, LockableMixin, DraftStateMixin, TranslatableMixin, PreviewableMixin
+from wagtail.admin.panels import FieldPanel, PublishingPanel
+from wagtail.search import index
+
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.views.snippets import SnippetViewSet
+from taggit.models import TaggedItemBase, Tag
+
 
 # Custom Page For that can be used in any Page class
 # base_form_class = CustomPageForm # help text and settings for the base Page fields from Wagtail (brought from base/models.py)
@@ -37,11 +46,6 @@ class CustomPageForm(WagtailAdminPageForm):
         
 
 # Snippet
-from wagtail.admin.panels import FieldPanel
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.views.snippets import SnippetViewSet
-from taggit.models import TaggedItemBase, Tag
-
 @register_snippet
 class TagSnippetViewSet(SnippetViewSet):
     model = Tag
@@ -55,3 +59,57 @@ class TagSnippetViewSet(SnippetViewSet):
         FieldPanel("name"),
         FieldPanel("slug"),
     ]
+
+@register_snippet
+class Author(
+        TranslatableMixin,
+        PreviewableMixin,  # Allows previews
+        LockableMixin,  # Makes the model lockable
+        DraftStateMixin,  # Needed for Drafts
+        RevisionMixin,  # Needed for Revisions
+        index.Indexed,  # Makes this searchable; don't forget to run python manage.py update_index
+        models.Model
+    ):
+    name = models.CharField(max_length=100)
+    bio = models.TextField()
+    revisions = GenericRelation("wagtailcore.Revision", related_query_name="author")
+
+    panels = [
+        FieldPanel("name", permission="blogpages.can_edit_author_name"),
+        FieldPanel("bio"),
+        PublishingPanel(),
+    ]
+
+    #might need to do `python manage.py update_index` after adding this
+    search_fields = [
+        index.FilterField('name'),
+        index.SearchField('name'),
+        index.AutocompleteField('name'),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def preview_modes(self):
+        return PreviewableMixin.DEFAULT_PREVIEW_MODES + [
+            ("dark_mode", "Dark Mode")
+        ]
+
+    def get_preview_template(self, request, mode_name):
+        # return "includes/author.html"  # Default for a single preview template
+        templates = {
+            "": "snippets/author.html", # Default
+            "dark_mode": "snippets/author_dark_mode.html"
+        }
+        return templates.get(mode_name, templates[""])
+
+    def get_preview_context(self, request, mode_name):
+        context = super().get_preview_context(request, mode_name)
+        context['warning'] = "This is a preview"
+        return context
+
+    class Meta(TranslatableMixin.Meta):
+        permissions = [
+            ("can_edit_author_name", "Can edit author name")
+        ]
