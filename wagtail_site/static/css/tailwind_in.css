@@ -1,0 +1,8 @@
+/* project/static/css/tailwind_in.css */
+
+/* Main Tailwind CSS imports */
+@import "tailwindcss" source(none);
+
+/* Template paths for Tailwind to scan */
+@source "../templates/**/*.html";
+@source "../../../**/templates/**/*.html";

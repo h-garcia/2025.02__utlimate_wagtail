@@ -24,14 +24,14 @@
         {% endif %}
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/wagtail_site.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/tailwind_out.css' %}">
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
         {% endblock %}
 
         <!-- Tailwind CDN-->
-        <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+        {% comment %} <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script> {% endcomment %}
 
         <!-- HTMX -->
         <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>

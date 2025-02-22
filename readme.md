@@ -4,6 +4,7 @@ https://github.com/KalobTaulien/ultimate-wagtail-developers-course-source-code
 ## Run
 * `pipenv shell`
 * `python manage.py runserver`
+* Tailwind -- `npx @tailwindcss/cli -i ./wagtail_site/static/css/wagtail_site.css -o ./wagtail_site/static/css/tailwinds.css --watch`
 
 ## Lessons learned
 * Custom image model
